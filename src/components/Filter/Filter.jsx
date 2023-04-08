@@ -8,7 +8,7 @@ export default function Filter({ filter, handlChangeFilter }) {
       <Input
         type="text"
         name="filter"
-        onChange={handlChangeFilter()}
+        onChange={handlChangeFilter}
         value={filter}
       />
     </Label>

@@ -3,10 +3,10 @@ import Contact from '../Contact/Contact';
 import { Item } from './ContactList.styled';
 // import { FaTrash } from 'react-icons/fa';
 
-const ContactList = ({ contacts, visiblContacts, deleteContact }) => {
+const ContactList = ({ contacts, visibleContacts, deleteContact }) => {
   return contacts ? (
     <ul>
-      {visiblContacts.map(({ id, name, number }) => {
+      {visibleContacts.map(({ id, name, number }) => {
         return (
           <Item key={id}>
             <Contact
@@ -15,7 +15,6 @@ const ContactList = ({ contacts, visiblContacts, deleteContact }) => {
               deleteContact={deleteContact}
               id={id}
             />
-
           </Item>
         );
       })}
@@ -27,7 +26,7 @@ const ContactList = ({ contacts, visiblContacts, deleteContact }) => {
 
 ContactList.propTypes = {
   contacts: PropTypes.number.isRequired,
-  visiblContacts: PropTypes.arrayOf(
+  visibleContacts: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,

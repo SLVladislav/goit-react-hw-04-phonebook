@@ -21,6 +21,7 @@ export default function ContactForm({ addContact, contacts }) {
   };
 
   const handleChange = event => {
+    
     const { name, value } = event.currentTarget;
 
     switch (name) {
