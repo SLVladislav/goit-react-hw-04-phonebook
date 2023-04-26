@@ -25,17 +25,19 @@ export const contactSlice = createSlice({
   reducers: {
     addContact(state, action) {
       // console.log(state);
-      state.list = [...state, action.payload];
+      return (state.list = [...state, action.payload]);
       // state.list.push(action.payload);
     },
     deleteContact(state, action) {
-      state.list = state.list.filter(contact => contact.id !== action.payload);
+      return (state.list = state.list.filter(
+        contact => contact.id !== action.payload
+      ));
     },
   },
 });
 
-export const getContactList = state => state.contacts;
-// console.log(getContactList);
+export const getContactList = state => state.contacts.list;
+console.log(getContactList);
 export const getFilter = state => state.filter;
 export const { addContact, deleteContact } = contactSlice.actions;
 

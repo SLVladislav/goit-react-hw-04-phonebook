@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import { Form, Label, Title, Input, Button } from './ContactForm.styled';
 import { useDispatch, useSelector } from 'react-redux';
 import { getContactList } from 'redux/store';
+import { addContact } from 'redux/store';
 
-export default function ContactForm({ addContact, contacts }) {
+export default function ContactForm() {
   const dispatch = useDispatch();
   const contactsList = useSelector(getContactList);
   const [name, setName] = useState('');
