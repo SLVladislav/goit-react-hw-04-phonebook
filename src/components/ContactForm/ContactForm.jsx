@@ -1,27 +1,30 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Form, Label, Title, Input, Button } from './ContactForm.styled';
+import { useDispatch, useSelector } from 'react-redux';
+import { getContactList } from 'redux/store';
 
 export default function ContactForm({ addContact, contacts }) {
+  const dispatch = useDispatch();
+  const contactsList = useSelector(getContactList);
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
   const handlSubmit = e => {
     e.preventDefault();
 
-    const isIncludes = contacts.find(
+    const isIncludes = contactsList.find(
       contact => contact.name.toLowerCase() === name.toLowerCase()
     );
 
     isIncludes
       ? alert(`${name} is already in contacts`)
-      : addContact({ name, number });
+      : dispatch(addContact(contact));
 
     reset();
   };
 
   const handleChange = event => {
-    
     const { name, value } = event.currentTarget;
 
     switch (name) {
