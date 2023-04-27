@@ -36,7 +36,7 @@ export const contactSlice = createSlice({
   },
 });
 
-export const getContactList = state => state.contacts.list;
+export const getContactList = state => state.contacts;
 console.log(getContactList);
 export const getFilter = state => state.filter;
 export const { addContact, deleteContact } = contactSlice.actions;
