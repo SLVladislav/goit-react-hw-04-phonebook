@@ -1,59 +1,41 @@
-import { useState, useEffect } from 'react';
-import { nanoid } from 'nanoid';
 import ContactForm from './ContactForm';
 import Filter from './Filter';
 import ContactList from './Contacts/ContactList';
 import { Container, Title, Header, Subtitle } from './App.styled';
-import { store } from 'redux/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { getContacts, getFilter, filterContacts } from 'redux/store';
 
 export default function App() {
-  // const [contacts, setContacts] = useState(() => {
-  //   return JSON.parse(localStorage.getItem('contacts')) ?? [];
-  // });
+  const filterState = useSelector(getFilter);
+  const contactsState = useSelector(getContacts);
+  const dispatch = useDispatch();
 
-  // const [filter, setFilter] = useState('');
+  const handlChangeFilter = e => {
+    dispatch(filterContacts(e));
+  };
 
-  // useEffect(() => {
-  //   window.localStorage.setItem('contacts', JSON.stringify(contacts));
-  // }, [contacts]);
-
-  // const addContact = obj => {
-  //   setContacts(prevState => [...prevState, { id: nanoid(), ...obj }]);
-  // };
-
-  // const handlChangeFilter = e => {
-  //   setFilter(e.currentTarget.value);
-  // };
-
-  // const deleteContact = id => {
-  //   setContacts(prevState => prevState.filter(contact => contact.id !== id));
-  // };
-
-  // const getVisibleContacts = () => {
-  //   const normalizedFilter = filter.toLowerCase();
-
-  //   return contacts.filter(contact =>
-  //     contact.name.toLowerCase().includes(normalizedFilter)
-  //   );
-  // };
+  const getVisibleContacts = () => {
+    const normalizedFilter = filterState.toLowerCase();
+    return contactsState.filter(contact => {
+      return contact.name.toLowerCase().includes(normalizedFilter);
+    });
+  };
 
   return (
     <Container>
       <Header>
         Phone<Title>book</Title>
       </Header>
-      <ContactForm  />
+      <ContactForm contacts={contactsState} />
       <Subtitle>Contacts</Subtitle>
-      <Filter  />
+      <Filter filter={filterState} handleChangeFilter={handlChangeFilter} />
       <ContactList
-      // contacts={contacts.length}
-      // deleteContact={() => store}
-      // visibleContacts={getVisibleContacts()}
+        visibleContacts={getVisibleContacts()}
+        contacts={contactsState.length}
       />
     </Container>
   );
 }
-
 
 // addContact={store} contacts={contacts}
 // handlChangeFilter={handlChangeFilter} filter={filter}

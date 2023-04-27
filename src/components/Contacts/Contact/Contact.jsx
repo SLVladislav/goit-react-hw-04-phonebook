@@ -1,14 +1,8 @@
 import PropTypes from 'prop-types';
 import { FaUserAlt, FaTrash } from 'react-icons/fa';
 import { Icon, Number, Wrapper, Button } from './Contact.styled';
-import { deleteContact } from '../../../redux/store';
-import { useDispatch } from 'react-redux';
 
-const Contact = ({ name, number, id }) => {
-  const dispatch = useDispatch();
-  const deleteContacts = id => {
-    dispatch(deleteContact(id));
-  };
+const Contact = ({ name, number, deleteContacts }) => {
   return (
     <>
       <Wrapper>
@@ -19,7 +13,7 @@ const Contact = ({ name, number, id }) => {
       </Wrapper>
       <Wrapper>
         <Number>{`${number}`}</Number>
-        <Button type="button" onClick={() => deleteContacts(id)}>
+        <Button type="button" onClick={deleteContacts}>
           <FaTrash />
         </Button>
       </Wrapper>

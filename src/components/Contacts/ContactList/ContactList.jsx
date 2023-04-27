@@ -1,30 +1,25 @@
 import PropTypes from 'prop-types';
 import Contact from '../Contact/Contact';
 import { Item } from './ContactList.styled';
-import { useDispatch, useSelector } from 'react-redux';
-import { getContactList } from 'redux/store';
+import { useDispatch } from 'react-redux';
+import { deleteContact } from 'redux/store';
 // import { FaTrash } from 'react-icons/fa';
 
-const ContactList = ({ contacts }) => {
+const ContactList = ({ contacts, visibleContacts }) => {
   const dispatch = useDispatch();
-  const contactsList = useSelector(getContactList);
-  const getVisibleContacts = () => {
-    const normalizedFilter = filter.toLowerCase();
 
-    return contactsList.filter(contact =>
-      contact.name.toLowerCase().includes(normalizedFilter)
-    );
-  };
+  const deleteContacts = contactId => dispatch(deleteContact(contactId));
+
 
   return contacts ? (
     <ul>
-      {getVisibleContacts.map(({ id, name, number }) => {
+      {visibleContacts.map(({ id, name, number }) => {
         return (
           <Item key={id}>
             <Contact
               name={name}
               number={number}
-              // deleteContact={deleteContact}
+              deleteContact={deleteContacts(id)}
               id={id}
             />
           </Item>
@@ -45,7 +40,6 @@ ContactList.propTypes = {
       number: PropTypes.string.isRequired,
     }).isRequired
   ).isRequired,
-  deleteContact: PropTypes.func.isRequired,
 };
 
 export default ContactList;

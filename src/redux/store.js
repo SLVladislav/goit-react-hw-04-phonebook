@@ -1,4 +1,4 @@
-import { configureStore, createSlice } from '@reduxjs/toolkit';
+import { combineReducers, configureStore, createSlice } from '@reduxjs/toolkit';
 import {
   persistStore,
   persistReducer,
@@ -10,65 +10,65 @@ import {
   REGISTER,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+// import { nanoid } from 'nanoid';
 
 //______________________________________________________________________________________________
 export const contactSlice = createSlice({
   name: 'contacts',
-  initialState: {
-    list: [
-      { id: 'id-1', name: 'Rosie', number: '459-12-56' },
-      { id: 'id-2', name: 'Hermione', number: '443-89-12' },
-      { id: 'id-3', name: 'Eden', number: '645-17-79' },
-      { id: 'id-4', name: 'Annie', number: '227-91-26' },
-    ],
-  },
+  initialState: { items: [], filter: '' },
   reducers: {
-    addContact(state, action) {
-      // console.log(state);
-      return (state.list = [...state, action.payload]);
-      // state.list.push(action.payload);
+    addContact(state, { payload }) {
+      state.items.push(payload);
     },
-    deleteContact(state, action) {
-      return (state.list = state.list.filter(
-        contact => contact.id !== action.payload
-      ));
+    deleteContact(state, { payload }) {
+      state.items = state.items.filter(item => item.id !== payload);
+    },
+    changeFilter(state, { payload }) {
+      state.filter = payload;
     },
   },
 });
 
-export const getContactList = state => state.contacts;
-console.log(getContactList);
+// console.log(contactSlice.actions);
+
+export const getContacts = state => state.contacts;
 export const getFilter = state => state.filter;
-export const { addContact, deleteContact } = contactSlice.actions;
+
+export const { addContact, deleteContact, changeFilter } = contactSlice.actions;
+// export const contactsReduser = contactSlice.reducer;
+
+//__________________________________________________________________________________
+// const filterSlice = createSlice({
+//   name: 'filter',
+//   initialState: '',
+//   reducers: {
+//     filterContacts(state, action) {
+//       return (state = action.payload);
+//     },
+//   },
+// });
+
+// export const { filterContacts } = filterSlice.actions;
+// export const filterReducer = filterSlice.reducer;
+
+//_________________________________________________________________________________
+// const rootReducer = combineReducers({
+//   contacts: contactsReduser,
+//   filter: filterReducer,
+// });
 
 const persistConfig = {
-  key: 'contacts',
+  key: 'root',
+  whitelist: ['contacts'],
   storage,
 };
 
-export const contactsReducer = persistReducer(
-  persistConfig,
-  contactSlice.reducer
-);
-//__________________________________________________________________________________
-const filterSlice = createSlice({
-  name: 'filter',
-  initialState: '',
-  reducers: {
-    filterContacts(state, action) {
-      return state === action.payload;
-    },
-  },
-});
+const contactsReducer = persistReducer(persistConfig, contactSlice.reducer);
 
-export const { filterContacts } = filterSlice.actions;
-export const filterReducer = filterSlice.reducer;
-
-//_________________________________________________________________________________
+//__________________________________________________________________________
 export const store = configureStore({
   reducer: {
     contact: contactsReducer,
-    filter: filterReducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
