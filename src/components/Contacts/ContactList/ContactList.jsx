@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 import Contact from '../Contact/Contact';
 import { Item } from './ContactList.styled';
-// import { useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { deleteContact } from 'redux/contactSlice/contactsSlice';
 
 const ContactList = ({ contacts, visibleContacts }) => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   return contacts ? (
     <ul>
@@ -15,7 +15,7 @@ const ContactList = ({ contacts, visibleContacts }) => {
             <Contact
               name={name}
               number={number}
-              deleteContact={deleteContact}
+              deleteContact={() => dispatch(deleteContact(id))}
               id={id}
             />
           </Item>

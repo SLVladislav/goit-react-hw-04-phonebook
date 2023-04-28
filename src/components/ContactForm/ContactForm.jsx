@@ -10,8 +10,7 @@ export default function ContactForm({ contacts }) {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
-  // const onChangeName = e => setName(e.currentTarget.value);
-  // const onChangeNumber = e => setNumber(e.currentTarget.value);
+
 
   const handlSubmit = e => {
     e.preventDefault();
