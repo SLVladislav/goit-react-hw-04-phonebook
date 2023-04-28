@@ -3,15 +3,18 @@ import Filter from './Filter';
 import ContactList from './Contacts/ContactList';
 import { Container, Title, Header, Subtitle } from './App.styled';
 import { useDispatch, useSelector } from 'react-redux';
-import { getContacts, getFilter, filterContacts } from 'redux/store';
+import { getContacts, getFilter } from 'redux/selector';
+import { filterContacts } from 'redux/Filter/filterSlice';
 
 export default function App() {
   const filterState = useSelector(getFilter);
+  // console.log('filterState', filterState);
   const contactsState = useSelector(getContacts);
+
   const dispatch = useDispatch();
 
   const handlChangeFilter = e => {
-    dispatch(filterContacts(e));
+    dispatch(filterContacts(e.currentTarget.value));
   };
 
   const getVisibleContacts = () => {
