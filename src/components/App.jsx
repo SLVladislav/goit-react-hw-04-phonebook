@@ -8,11 +8,10 @@ import { filterContacts } from 'redux/Filter/filterSlice';
 
 export default function App() {
   const filterState = useSelector(getFilter);
-  console.log('filterState', filterState);
   const contactsState = useSelector(getContacts);
 
   const dispatch = useDispatch();
-
+  
   const handlChangeFilter = e => {
     dispatch(filterContacts(e.currentTarget.value));
   };

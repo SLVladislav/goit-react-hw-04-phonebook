@@ -17,6 +17,6 @@ export default function Filter({ filter, handleChangeFilter }) {
 }
 
 Filter.propTypes = {
-  changeFilter: PropTypes.func.isRequired,
+  handleChangeFilter: PropTypes.func.isRequired,
   filter: PropTypes.string.isRequired,
 };

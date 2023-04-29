@@ -8,7 +8,7 @@ export const contactSlice = createSlice({
     addContact: (state, action) => {
       return {
         ...state,
-        contacts: [...state, { id: nanoid(), ...action.payload }],
+        contacts: [...state.contacts, { id: nanoid(), ...action.payload }],
       };
     },
     deleteContact: (state, action) => {
